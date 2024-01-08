@@ -25,6 +25,7 @@ class App:
         self.filter_string=""
         self.usrshare = "/usr/share/applications/"
         self.localshare = "/usr/local/share/applications/"
+        self.varflatpakshare = "/var/lib/flatpak/exports/share/applications/"
         if os.geteuid()>0 :
             self.localshare = os.path.expanduser("~/.local/share/applications/")
 
@@ -36,6 +37,7 @@ class App:
     def get_applications(self):
         # List all system files
         self.add_directory(self.usrshare)
+        self.add_directory(self.varflatpakshare)
         self.add_directory(self.localshare)
 
     def add_directory(self, dir):
