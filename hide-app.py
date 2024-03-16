@@ -41,6 +41,8 @@ class App:
         self.add_directory(self.localshare)
 
     def add_directory(self, dir):
+        if not os.path.isdir(dir):
+            return
         for file in os.listdir(dir):
             if file.endswith(".desktop"):
                 app = DesktopEntry("%s%s" % (dir , file))
