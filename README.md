@@ -6,7 +6,13 @@ A very simple application to hide .desktop application launchers from menus. Int
 
 ## From github
 
-`git clone https://github.com/nwg-piotr/nwg-launchers`
+Get the necessary python packages
+
+`PyGObject`, `pyxdg`
+
+then clone the repo with
+
+`git clone git@github.com:trigg/HideApplication.git`
 
 # Running
 
