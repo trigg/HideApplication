@@ -53,7 +53,7 @@ class App:
         self.filter.refilter()
 
     def filter_func(self, model, iter, data):
-        if self.filter_string in model[iter][2]:
+        if self.filter_string.lower() in model[iter][2].lower():
             return True
         return False
 
