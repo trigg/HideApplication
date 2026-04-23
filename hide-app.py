@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # Copyright 2021 Nathan Howard
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 #
 # The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
@@ -55,12 +55,14 @@ class App:
     def filter_func(self, model, iter, data):
         if self.filter_string.lower() in model[iter][2].lower():
             return True
+        if self.filter_string.lower() in model[iter][3].lower():
+            return True
         return False
 
     def create_window(self):
         box = Gtk.VBox(homogeneous=False)
 
-        store = Gtk.ListStore(bool,str, str)
+        store = Gtk.ListStore(bool,str, str, str)
         self.filter = store.filter_new()
         self.filter.set_visible_func(self.filter_func)
         for app in self.list:
@@ -68,7 +70,8 @@ class App:
             name = obj.getName()
             icon = obj.getIcon()
             hidden = obj.getNoDisplay()
-            store.append([hidden,icon, name])
+            description = obj.getComment()
+            store.append([hidden,icon, name, description])
 
         scrolledwindow = Gtk.ScrolledWindow()
         tree = Gtk.TreeView(model=self.filter)
@@ -78,14 +81,17 @@ class App:
         toggle = Gtk.CellRendererToggle()
         title = Gtk.CellRendererText()
         icon = Gtk.CellRendererPixbuf()
+        description = Gtk.CellRendererText()
 
         column.pack_start(toggle, True)
         column.pack_start(icon, True)
         column.pack_start(title, True)
+        column.pack_start(description, True)
 
         column.add_attribute(toggle, "active", 0)
         column.add_attribute(icon, "icon_name",1)
         column.add_attribute(title, "text", 2)
+        column.add_attribute(description, "text",3)
 
         tree.append_column(column)
 
